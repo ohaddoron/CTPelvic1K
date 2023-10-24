@@ -231,7 +231,7 @@ def predict_from_folder(model, input_folder, output_folder, folds, save_npz, num
     """
     # preparation
     maybe_mkdir_p(output_folder)
-    shutil.copy(join(model, 'plans.pkl'), output_folder)
+    shutil.copy(model, output_folder)
 
     ### case name ###
     # will adapt to your name format. For example, "_data.nii.gz" in pengboliu's experiments.
