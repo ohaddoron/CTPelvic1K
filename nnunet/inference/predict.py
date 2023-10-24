@@ -211,12 +211,12 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz,
     _ = [i.get() for i in results]
 
 
-def predict_from_folder(model, input_folder, output_folder, folds, save_npz, num_threads_preprocessing,
+def predict_from_folder(model_dir, model_name, input_folder, output_folder, folds, save_npz, num_threads_preprocessing,
                                      num_threads_nifti_save, lowres_segmentations, part_id, num_parts, tta,
                         overwrite_existing=True):
     """
     here we use the standard naming scheme to generate list_of_lists and output_files needed by predict_cases
-    :param model:
+    :param model_dir:
     :param input_folder:
     :param output_folder:
     :param folds:
@@ -231,7 +231,7 @@ def predict_from_folder(model, input_folder, output_folder, folds, save_npz, num
     """
     # preparation
     maybe_mkdir_p(output_folder)
-    shutil.copy(model, output_folder)
+    shutil.copy(f'{model_dir}/{model_name}', output_folder)
 
     ### case name ###
     # will adapt to your name format. For example, "_data.nii.gz" in pengboliu's experiments.
@@ -260,7 +260,7 @@ def predict_from_folder(model, input_folder, output_folder, folds, save_npz, num
     else:
         lowres_segmentations = None
 
-    return predict_cases(model,
+    return predict_cases(model_dir,
                          list_of_lists[part_id::num_parts],  # input
                          output_files[part_id::num_parts],   # output
                          folds,
