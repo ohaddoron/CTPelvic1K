@@ -55,7 +55,7 @@ if __name__ == "__main__":
     """
     train_dir = opts.train_dir
     output_folder = opts.output_dir
-    test_dir = "/path/to/testing dataset"
+    # test_dir = "/path/to/testing dataset"
 
     img_dir = join(output_folder, "imagesTr")
     lab_dir = join(output_folder, "labelsTr")
@@ -86,11 +86,11 @@ if __name__ == "__main__":
     nii_files_tr_data = subfiles(train_dir, True, None, "_data.nii.gz", True)
     nii_files_tr_seg  = subfiles(train_dir, True, None, "_mask_4label.nii.gz", True)
 
-    nii_files_ts      = subfiles(test_dir, True, None, "_data.nii.gz", True)
+    # nii_files_ts      = subfiles(test_dir, True, None, "_data.nii.gz", True)
 
     p = Pool(16)
     train_ids = p.map(load_save_train, zip(nii_files_tr_data, nii_files_tr_seg))
-    test_ids = p.map(load_save_test, nii_files_ts)
+    # test_ids = p.map(load_save_test, nii_files_ts)
     p.close()
     p.join()
 
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     json_dict['training'] = [{'image': "./imagesTr/%s.nii.gz" % i,
                               "label": "./labelsTr/%s.nii.gz" % i} for i in train_ids]
 
-    json_dict['test'] = ["./imagesTs/%s.nii.gz" % i for i in test_ids]
+    # json_dict['test'] = ["./imagesTs/%s.nii.gz" % i for i in test_ids]
 
     with open(os.path.join(output_folder, "dataset.json"), 'w') as f:
         json.dump(json_dict, f, indent=4, sort_keys=True)
