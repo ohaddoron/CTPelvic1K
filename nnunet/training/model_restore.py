@@ -112,7 +112,7 @@ def load_model_and_checkpoint_files(folder, folds=None):
             folds = [join(folder, "all")]
         else:
             folds = [join(folder, "fold_%d" % i) for i in folds]
-        assert all([isdir(i) for i in folds]), "list of folds specified but not all output folders are present"
+        assert all([isdir(i) for i in folds]), f"list of folds specified but not all output folders are present, {folds}"
     elif isinstance(folds, int):
         print('folds: ', folds)
         folds = [join(folder, "fold_%d" % folds)]
