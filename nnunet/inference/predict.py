@@ -231,7 +231,10 @@ def predict_from_folder(model_dir, model_name, input_folder, output_folder, fold
     """
     # preparation
     # maybe_mkdir_p(output_folder)
-    shutil.copy(f'{model_dir}/{model_name}', output_folder)
+    try:
+        shutil.copy(f'{model_dir}/{model_name}', output_folder)
+    except shutil.SameFileError:
+        pass
 
     ### case name ###
     # will adapt to your name format. For example, "_data.nii.gz" in pengboliu's experiments.
