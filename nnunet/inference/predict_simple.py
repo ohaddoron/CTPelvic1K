@@ -5,6 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.getcwd()))
 
 import argparse
+from pathlib import Path
 from nnunet.inference.predict import predict_from_folder
 from nnunet.paths import default_plans_identifier, network_training_output_dir
 from batchgenerators.utilities.file_and_folder_operations import join, isdir
@@ -96,6 +97,7 @@ if __name__ == "__main__":
                               args.model,  # 3d_lowres
                               args.task_name, # Task12_
                               args.nnunet_trainer + "__" + args.plans_identifier)
+    os.makedirs(output_folder_name, exist_ok=True, mode=0o777)
     print('\n'*2, "using model stored in: ", output_folder_name)
     assert isdir(output_folder_name), "model output folder not found: %s" % output_folder_name
 
@@ -127,7 +129,8 @@ if __name__ == "__main__":
     else:
         raise ValueError("Unexpected value for overwrite, Use 1 or 0")
 
-    predict_from_folder(output_folder_name,
+    predict_from_folder(Path.home().joinpath('output_segmentation').absolute().as_posix(),
+                        'model_best.model',
                         input_folder,
                         output_folder,
                         folds, save_npz,

@@ -204,11 +204,11 @@ def predict_cases(model, list_of_lists, output_filenames, folds, save_npz,
             np.save(output_filename[:-7] + ".npy", softmax_mean)
             softmax_mean = output_filename[:-7] + ".npy"
 
-        results.append(prman.starmap_async(save_segmentation_nifti_from_softmax,
-                                           ((softmax_mean, output_filename, dct, 1, None, None, None, npz_file), )
-                                           ))
+        # results.append(prman.starmap_async(save_segmentation_nifti_from_softmax,
+        #                                    ((softmax_mean, output_filename, dct, 1, None, None, None, npz_file), )
+        #                                    ))
+        results.append(save_segmentation_nifti_from_softmax(softmax_mean, output_filename, dct, 1, None, None, None, npz_file))
 
-    _ = [i.get() for i in results]
 
 
 def predict_from_folder(model_dir, model_name, input_folder, output_folder, folds, save_npz, num_threads_preprocessing,
@@ -230,7 +230,7 @@ def predict_from_folder(model_dir, model_name, input_folder, output_folder, fold
     :return:
     """
     # preparation
-    maybe_mkdir_p(output_folder)
+    # maybe_mkdir_p(output_folder)
     shutil.copy(f'{model_dir}/{model_name}', output_folder)
 
     ### case name ###
